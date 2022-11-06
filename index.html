@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Owl Books</title>
+    <link rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container dontAlign">
+      <div id="topnav" class="positionFixed"></div>
+      <div class="flex marginTop70">
+        <div id="sidebar">
+          <div id="genre">
+            <p class="largeFont centerText">Genre</p>
+            <input type="radio" name="genre" id="radio1" class="radio" value="fiction" checked>
+            <label for="radio1" class="block label">Fiction</label>
+            <input type="radio" name="genre" id="radio2" class="radio" value="nonfiction">
+            <label for="radio2" class="block label">Non-Fiction</label>
+            <input type="radio" name="genre" id="radio3" class="radio" value="advice">
+            <label for="radio3" class="block label">Self-Help</label>
+            <input type="radio" name="genre" id="radio4" class="radio" value="youngadult">
+            <label for="radio4" class="block label">Young Adult</label>
+          </div>
+          <div id="price">
+            <p class="largeFont centerText marginTop">Price</p>
+            <input type="radio" name="price" id="radio5" class="radio" value="priceup">
+            <label for="radio5" class="block label">
+              Sort
+              <i class="fa-solid fa-arrow-up marginLeftS"></i>
+            </label>
+            <input type="radio" name="price" id="radio6" class="radio" value="pricedown">
+            <label for="radio6" class="block label">
+              Sort
+              <i class="fa-solid fa-arrow-down marginLeftS"></i>
+            </label>
+          </div>
+        </div>
+        <div class="bookContainer flexWrapCenter"></div>
+        <div class="loader"></div>
+      </div>
+      <div class="footer"><p>Created by Stefan</p></div>
+    </div>
+    <script type="module" src="./src/index.js"></script>
+  </body>
+</html>

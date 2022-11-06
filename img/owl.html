@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PushOwl</title>
+    <style>
+        * {
+          margin: 0;
+        }
+        section {
+            position: relative;
+            width: 400px;
+            height: 300px;
+            background: #d56950;
+            display: flex;
+            justify-content: center;
+        }
+        h1, p, a {
+            position: absolute;
+        }
+        h1 {
+            width: 50px;
+            height: 50px;
+            background: #442e49;
+            transform: rotate(45deg);
+            top: 162px;
+        }
+        p {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 114px;
+            height: 114px;
+            background: #442e49;
+            border-radius: 0 50% 50%;
+            top: 77px;
+            left: 89px;
+        }
+        p[i] {
+            transform: rotate(90deg);
+            left: 197px;
+        }
+        a {
+            width: 90px;
+            height: 90px;
+            background: #d56950;
+            border-radius: 50%;
+        }
+        a[i], a[j] {
+            width: 12px;
+            height: 12px;
+            background: #d56950;
+            border: 9px solid;
+            border-radius: 50%;
+            border-color: #442e49;
+        }
+      </style>
+</head>
+<body>
+    <section>
+        <h1></h1>
+        <p><a></a><a i></a></p>
+        <p i><a></a><a j></a></p>
+    </section>
+</body>
+</html>
