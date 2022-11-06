@@ -5,28 +5,7 @@ basketItems();
 const searchParams = new URLSearchParams(window.location.search);
 const bookId = searchParams.get('id');
 let book;
-
-const createCard = (book) => {
-	return `<img class="bookImage" src='${book.book_image}' />
-			<div class="marginLeft description">
-				<p class="capitalize blackText"><b>Title:</b> ${book.title.toLowerCase()}</p>
-				<p class="blackText"><b>Author:</b> ${book.author}</p>
-				<p class="blackText"><b>Publisher:</b> ${book.publisher}</p>
-				<p class="blackText"><b>ISBN-13:</b> ${book.primary_isbn13}</p>
-				<p class="justify blackText"><b>Description:</b> ${book.description}</p>
-				<p class="blackText"><b>Price:</b><span class="greenText"> $${book.price}</span></p>
-				<hr>
-				<p class="blackText"><b>In stock:</b> <span class="bookStock">${book.stock}</span></p>
-				<form onsubmit="return false">
-					<p class="blackText"><b>Quantity:</b> 
-						<input id="input-quantity" type="number" value="1" min="1" max="${book.stock}">
-					</p>
-					<button class="greenBtn addToBasket" type="submit">
-						<i class="fas fa-basket-shopping marginRight"></i>Add to basket
-					</button>
-				</form>
-			</div>`;
-};
+let bookStock;
 
 const showBook = async () => {
 	// Show loader
@@ -35,7 +14,8 @@ const showBook = async () => {
 	const result = await fetch(`https://632b4aa31090510116d6319b.mockapi.io/books/${bookId}`);
 	book = await result.json();
 	// Update book stock
-	bookStock();
+	bookStock = Number(book.stock);
+	bookStockF();
 	// Create Card
 	document.querySelector('.bookDetails').innerHTML = createCard(book);
 	// Event listener for addToBasket button
@@ -47,8 +27,29 @@ const showBook = async () => {
 
 window.addEventListener('DOMContentLoaded', showBook);
 
-// Basket function
-const addToBasket = (e) => {
+const createCard = (book) => {
+	return `<img class="bookImage" src='${book.book_image}' />
+			<div class="marginLeft description">
+				<p class="capitalize blackText"><b>Title:</b> ${book.title.toLowerCase()}</p>
+				<p class="blackText"><b>Author:</b> ${book.author}</p>
+				<p class="blackText"><b>Publisher:</b> ${book.publisher}</p>
+				<p class="blackText"><b>ISBN-13:</b> ${book.primary_isbn13}</p>
+				<p class="justify blackText"><b>Description:</b> ${book.description}</p>
+				<p class="blackText"><b>Price:</b><span class="greenText"> $${book.price}</span></p>
+				<hr>
+				<p class="blackText"><b>In stock:</b> <span class="bookStock">${bookStock}</span></p>
+				<form onsubmit="return false">
+					<p class="blackText"><b>Quantity:</b> 
+						<input id="input-quantity" type="number" value="1" min="1" max="${bookStock}">
+					</p>
+					<button class="greenBtn addToBasket" type="submit">
+						<i class="fas fa-basket-shopping marginRight"></i>Add to basket
+					</button>
+				</form>
+			</div>`;
+};
+
+const addToBasket = () => {
 	const inputDetails = document.querySelector('#input-quantity');
 	const inputQuantity = Number(inputDetails.value);
 	if (inputDetails.checkValidity()){
@@ -70,9 +71,9 @@ const addToBasket = (e) => {
 			}
 		}
 		// Update book stock
-		book.stock -= inputQuantity;
-		document.querySelector('.bookStock').textContent = book.stock;
-		inputDetails.setAttribute("max", book.stock);
+		bookStock -= inputQuantity;
+		document.querySelector('.bookStock').textContent = bookStock;
+		inputDetails.setAttribute("max", bookStock);
 		// If there are books in the basket, put basket in local storage
 		if (basket.length > 0) {
 			localStorage.setItem('basket', JSON.stringify(basket));
@@ -83,17 +84,17 @@ const addToBasket = (e) => {
 		document.querySelector(".confirm").style.display = "block"
 		setTimeout(() => {document.querySelector(".confirm").style.display = "none"}, 1000)
 	// If stock is empty, show alert when adding books to basket
-	} else if (book.stock === 0) {
+	} else if (bookStock === 0) {
 		alert("Stock limit reached.")
 	};
 };
 // Update book stock
-const bookStock = () => {
+const bookStockF = () => {
 	if (localStorage.getItem('basket') !== null) {
 		const basket = JSON.parse(localStorage.getItem('basket'));
 		const bookInBasket = basket.find(book => book.id === bookId);
 		if (bookInBasket !== undefined) {
-			book.stock = book.stock - bookInBasket.items
+			bookStock = book.stock - bookInBasket.items;
 		}
 	}
 }
