@@ -6,16 +6,16 @@ let basket = JSON.parse(localStorage.getItem('basket'));
 
 const createTable = () => {
 	document.querySelector(".tableDiv").innerHTML = `
-	<table class="table">
-		<tr>
-			<th>Image</th>
-			<th>Title</th>
-			<th>Author</th>
-			<th>Price</th>
-			<th>Quantity</th>
-			<th>Remove</th>
-		</tr>
-	</table>`;
+		<table class="table">
+			<tr>
+				<th>Image</th>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Price</th>
+				<th>Quantity</th>
+				<th>Remove</th>
+			</tr>
+		</table>`;
 	const table = document.querySelector('.table');
 	basket.forEach(book => {
 		let row = table.insertRow(1);
@@ -36,7 +36,7 @@ const createTable = () => {
 	});
 };
 
-let buyTable = () => {
+const buyTable = () => {
 	let total = 0;
 	let items = 0;
 	if (basket) {
@@ -45,11 +45,11 @@ let buyTable = () => {
 			items += book.items;
 		});
 	}
-	document.querySelector(".items").innerHTML = `Items: <span class="greenText">${items}</span>`;
-	document.querySelector(".totalPrice").innerHTML = `Total Price: <span class="greenText">$${total}</span>`;
+	document.querySelector(".items").textContent = items;
+	document.querySelector(".totalPrice").textContent = `$${total}`;
 };
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
 	buyTable();
 	if (basket.length > 0) createTable();
 });

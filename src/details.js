@@ -30,7 +30,6 @@ const createCard = (book) => {
 
 const showBook = async () => {
 	// Show loader
-	document.querySelector('.bookDetails').style.display = 'none';
 	document.querySelector('.loader').style.display = 'block';
 	// Fetch book
 	const result = await fetch(`https://632b4aa31090510116d6319b.mockapi.io/books/${bookId}`);
@@ -43,7 +42,7 @@ const showBook = async () => {
 	document.querySelector('.addToBasket').addEventListener('click', addToBasket)
 	// Hide loader
 	document.querySelector('.loader').style.display = 'none';
-	document.querySelector('.bookDetails').style.display = 'flex';
+	document.querySelector('.bookDetails').classList.remove("displayNone");
 };
 
 window.addEventListener('DOMContentLoaded', showBook);
