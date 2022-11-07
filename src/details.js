@@ -74,6 +74,7 @@ const addToBasket = () => {
 		bookStock -= inputQuantity;
 		document.querySelector('.bookStock').textContent = bookStock;
 		inputDetails.setAttribute("max", bookStock);
+		inputDetails.value = 1;
 		// If there are books in the basket, put basket in local storage
 		if (basket.length > 0) {
 			localStorage.setItem('basket', JSON.stringify(basket));
