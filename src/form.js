@@ -3,12 +3,11 @@ navbar();
 basketItems();
 
 let response;
-const form = document.querySelector('.form');
-const confirm = document.querySelector(".confirm");
+const $ = query => document.querySelector(query)
 const searchParams = new URLSearchParams(window.location.search);
 const bookId = searchParams.get('id');
 const bookURL = `https://632b4aa31090510116d6319b.mockapi.io/books`;
-let book =  {
+let book = {
     "author": "",
     "book_image": "",
     "description": "",
@@ -50,58 +49,60 @@ const createForm = (book) => {
 };
 
 const showForm = async () => {
-	// Show loader
-	form.style.display = 'none';
-	document.querySelector('.loader').style.display = 'block';
+    // Show loader
+    $('.form').style.display = 'none';
+    $('.loader').style.display = 'block';
 
-	// Show book
+    // Show book
     if (bookId) {
         const result = await fetch(`https://632b4aa31090510116d6319b.mockapi.io/books/${bookId}`);
         book = await result.json();
     }
-    form.innerHTML = createForm(book);
+    $('.form').innerHTML = createForm(book);
 
     // Event listener for new book button and update book button
-    document.querySelector('.newBookBtn').addEventListener('click', () => {
-        if (form.checkValidity()) addOrEditBook(bookURL, "POST", "added")});
-    document.querySelector('.updateBookBtn').addEventListener('click', () => {
-        if (form.checkValidity()) addOrEditBook(`${bookURL}/${bookId}`, "PUT", "updated")});
+    $('.newBookBtn').addEventListener('click', () => {
+        if ($('.form').checkValidity()) addOrEditBook(bookURL, "POST", "added")
+    });
+    $('.updateBookBtn').addEventListener('click', () => {
+        if ($('.form').checkValidity()) addOrEditBook(`${bookURL}/${bookId}`, "PUT", "updated")
+    });
 
-	// Hide loader
-	document.querySelector('.loader').style.display = 'none';
-	form.style.display = 'flex';
+    // Hide loader
+    $('.loader').style.display = 'none';
+    $('.form').style.display = 'flex';
 };
 
 window.addEventListener('DOMContentLoaded', showForm);
 
 const addOrEditBook = async (URL, methodHTTP, msgConfirm) => {
-	response = await fetch(URL, {
-		method: methodHTTP,
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({
-			author: document.querySelector('#inputAuthor').value,
-            book_image: document.querySelector('#inputImage').value,
-            description: document.querySelector('#inputDescription').value,
-            price: document.querySelector('#inputPrice').value,
-            primary_isbn13: document.querySelector('#inputIsbn13').value,
-            publisher: document.querySelector('#inputPublisher').value,
-            title: document.querySelector('#inputTitle').value,
-            genre: document.querySelector('#inputGenre').value.toLowerCase(),
-            stock: document.querySelector('#inputStock').value,
-		}),
-	});
-	let data = await response.json();
-	console.log(msgConfirm, data);
+    response = await fetch(URL, {
+        method: methodHTTP,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            author: $('#inputAuthor').value,
+            book_image: $('#inputImage').value,
+            description: $('#inputDescription').value,
+            price: $('#inputPrice').value,
+            primary_isbn13: $('#inputIsbn13').value,
+            publisher: $('#inputPublisher').value,
+            title: $('#inputTitle').value,
+            genre: $('#inputGenre').value.toLowerCase(),
+            stock: $('#inputStock').value,
+        }),
+    });
+    let data = await response.json();
+    console.log(msgConfirm, data);
     confirmMsg(msgConfirm);
 }
 
 const confirmMsg = (string) => {
     if (response.ok) {
-        confirm.textContent = `The book has been ${string}.`
+        $(".confirm").textContent = `The book has been ${string}.`
     } else {
-        confirm.classList.add("redBg");
-        confirm.textContent = "There was a problem, view console log."
+        $(".confirm").classList.add("redBg");
+        $(".confirm").textContent = "There was a problem, view console log."
     }
-    confirm.style.display = "block";
-    setTimeout(() => {confirm.style.display = "none"}, 1000);
+    $(".confirm").style.display = "block";
+    setTimeout(() => { $(".confirm").style.display = "none" }, 1000);
 }
